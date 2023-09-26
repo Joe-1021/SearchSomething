@@ -15,6 +15,16 @@ input,button,a:focus{
   z-index: 9999;
 }
 
+.card{
+  overflow: hidden;
+  
+}
+.card>img:hover{
+  transition: all .5s ease-in;
+  transform:scale(1.15);
+  
+}
+
 .pagination{
   justify-content: space-between;
   align-items: center;
