@@ -1,4 +1,4 @@
-input,button:focus{
+input,button,a:focus{
   box-shadow: none !important;
 }
 
@@ -18,4 +18,7 @@ input,button:focus{
 .pagination{
   justify-content: space-between;
   align-items: center;
+}
+.page-link:hover{
+  border-color: #0a58ca;
 }
