@@ -99,9 +99,17 @@ function App() {
 
   const getSinglePhoto = async(id)=>{
     const singlePhotoApi='https://api.unsplash.com/photos/';
-    const res = await axios.get(`${singlePhotoApi}${id}?client_id=${accessKey}`);
-    setPhotoUrl(res.data.urls.regular)
-    myModal.current.show();
+    try {
+      const res = await axios.get(`${singlePhotoApi}${id}?client_id=${accessKey}`);
+      setPhotoUrl(res.data.urls.regular);
+      myModal.current.show();
+      const modal = document.querySelector('.modal');
+      modal.style.display='flex';
+      modal.style.alignItems='center'
+    } catch (error) {
+      console.log(error);
+    }
+    
   }
   
   useEffect(()=>{
