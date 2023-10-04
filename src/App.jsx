@@ -9,11 +9,10 @@ const accessKey = 'GAvxZ9VesndxTx_9NftqgOtZffnTB0YhfGiWGDJA-bs';
 const SearchBar = ({search,setSearch,handleSearch})=>{
   return(
     <div className="searchBar d-flex justify-content-between align-items-center ">
-          <label htmlFor="search">搜尋</label>
-            <input type="search" id='search' className='form-control w-75' value={search} onChange={(e)=>{
+            <input type="search" id='search' className='form-control search-input' value={search} onChange={(e)=>{
                 setSearch(e.target.value)
             }}/>
-            <button type='button' className='btn btn-secondary' onClick={handleSearch}>搜尋</button>
+            <button type='button' className='btn btn-secondary  ' onClick={handleSearch}>搜尋</button>
         </div>
   )
 }
@@ -29,12 +28,23 @@ const Card = ({data,getSinglePhoto})=>{
   )
 }
 
-const Pagination = ({previousPage,nextPage,currentPage})=>{
+const Pagination = ({previousPage,nextPage,currentPage,page,handleSelectPage})=>{
   return(
     <nav aria-label="Page navigation ">
       <ul className="pagination">
         <li className="page-item previousPage"><a href="#" className="page-link" onClick={previousPage}>Previous</a></li>
-        <p className='mb-0'>第 {currentPage.current} 頁</p>
+        {/*<p className='mb-0'>第 {currentPage.current} 頁</p>*/}
+        <li>第
+          <select className='selectPage' value={page} onChange={handleSelectPage}>
+            {[...Array(page >=10 ? page % 10 ? page +10 -(page % 10):page + 10 :10).keys()].map((i)=>{
+
+              return(
+                <option value={i+1} key={i}>{i+1}</option>
+              )
+            })}
+          </select>
+          頁
+        </li>
         <li className="page-item nextPage"><a href="#" className="page-link" onClick={nextPage}>Next</a></li>
       </ul>
     </nav>
@@ -53,12 +63,12 @@ const Loading = ({isLoading})=>{
 
 const Modal =({modalRef,photoUrl})=>{
   return(
-    <div className="modal" tabIndex="-1" ref={modalRef}>
-      <div className="modal-dialog">
+    <div className="modal fade" tabIndex="-1" ref={modalRef}>
+      <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
-            <button type="button" className="btn-close" style={{position:'absolute', top:0, right:0, padding:'10px'}} data-bs-dismiss="modal" aria-label="Close"></button>
-            <img src={photoUrl} alt="" width='100%'/>
-        </div>
+            <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <img src={photoUrl} alt="" width='100%' height='auto'/>
+        </div>    
       </div>
     </div>
   )
@@ -72,7 +82,8 @@ function App() {
   const currentPage = useRef(1);
   const modalRef = useRef(null);
   const myModal = useRef(null);
-  const [photoUrl,setPhotoUrl]=useState('')
+  const [photoUrl,setPhotoUrl]=useState('');
+  const [page,setPage]=useState(1)
 
   function handleSearch(){
     if(search ===''){
@@ -147,9 +158,9 @@ function App() {
     }
     if(currentPage.current < 1){
       currentPage.current = 1
-    }else{
-      currentPage.current --
     }
+    currentPage.current --
+    setPage(currentPage.current);
     
     getPhotos(currentPage.current)
   }
@@ -158,14 +169,23 @@ function App() {
     if(search === ''){
       return
     }
-    currentPage.current ++
-    getPhotos(currentPage.current)
+    currentPage.current ++;
+    setPage(currentPage.current );
+    getPhotos(currentPage.current);
+  }
+
+  function handleSelectPage(e){
+    if(search === ''){
+      return
+    }
+    setPage(Number(e.target.value));
+    getPhotos(Number(e.target.value))
   }
 
   return (
     <>
    
-    <div className="container">
+    <div className="container py-3">
         <Loading isLoading={isLoading}/>
         <SearchBar search={search} setSearch={setSearch} handleSearch={handleSearch}/>
 
@@ -178,7 +198,7 @@ function App() {
             )
           })}
         </div>
-        <Pagination previousPage={previousPage} nextPage={nextPage} currentPage={currentPage}/>
+        <Pagination previousPage={previousPage} nextPage={nextPage} currentPage={currentPage} page={page} handleSelectPage={handleSelectPage}/>
     </div>
     
     <Modal modalRef={modalRef} photoUrl={photoUrl}/>

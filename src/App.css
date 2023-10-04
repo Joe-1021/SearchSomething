@@ -15,14 +15,20 @@ input,button,a:focus{
   z-index: 9999;
 }
 
+.search-input{
+  width: calc( 100% - 58px );
+}
+
 .card{
   overflow: hidden;
-  
 }
+
+.card>img{
+  transition: 1s ease-out;
+}
+
 .card>img:hover{
-  transition: all .5s ease-in;
-  transform:scale(1.15);
-  
+  transform: scale(1.2);
 }
 
 .pagination{
@@ -31,4 +37,23 @@ input,button,a:focus{
 }
 .page-link:hover{
   border-color: #0a58ca;
+}
+
+.disabled{
+  cursor: not-allowed;
+}
+
+.modal-dialog{
+  pointer-events: all;
+}
+
+.btn-close{
+  position: absolute;
+  right: 0;
+  padding: 1rem;
+}
+
+.selectPage{
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
 }
