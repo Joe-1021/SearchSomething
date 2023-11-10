@@ -8,11 +8,12 @@ const accessKey = 'GAvxZ9VesndxTx_9NftqgOtZffnTB0YhfGiWGDJA-bs';
 //component start
 const SearchBar = ({search,setSearch,handleSearch})=>{
   return(
-    <div className="searchBar d-flex justify-content-between align-items-center ">
-            <input type="search" id='search' className='form-control search-input' value={search} onChange={(e)=>{
+    <div className="searchBar d-flex justify-content-between align-items-center position-relative">
+            <input type="input" id='search' className='form-control search-input' value={search} onChange={(e)=>{
                 setSearch(e.target.value)
             }}/>
-            <button type='button' className='btn btn-secondary  ' onClick={handleSearch}>搜尋</button>
+            <button type='button' className='btn position-absolute end-0' onClick={handleSearch}><i class="fa fa-search fa-lg"></i></button>
+            
         </div>
   )
 }
@@ -149,7 +150,7 @@ function App() {
 
   useEffect(()=>{
     myModal.current = new bootstrap.Modal(modalRef.current);
-    
+    console.log(myModal.current)
   },[])
 
   function previousPage(){

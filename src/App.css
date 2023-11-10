@@ -16,7 +16,19 @@ input,button,a:focus{
 }
 
 .search-input{
-  width: calc( 100% - 58px );
+  border-radius: 25px;
+  padding: 10px 15px;
+  box-shadow: 3px 3px 5px #dee2e6 !important;
+}
+
+.fa-search{
+  transform: scale(1,1);
+  transition:all .2s ease-out;
+}
+
+.fa-search:hover{
+  color: gray;
+  transform: scale(1.2,1.2);
 }
 
 .card{
